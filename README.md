@@ -87,8 +87,32 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
   
-#### Assess correlation between all pairs of variables
-    form <- ~ Individual + cellType + Batch + Age 
+####  plot expression stratified by Sex
+    # get gene with the highest variation across Sex
+    # create data.frame with expression of gene i and Tissue
+    # type for each sample
+    i <- which.max( varPart$Sex )
+    Expression = geneExpr[i,]
+    GE <- data.frame( Expression ,
+                      Sex = info$Sex)
+    plotStratify( Expression ~ Sex, GE, main=rownames(geneExpr)[i])
+![plot expression stratified by Sex](2c.Sex_Stratification.png)
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  
+#### plot expression stratified by batch
+    # get gene with the highest variation across Sex
+    # create data.frame with expression of gene i and Tissue
+    # type for each sample
+    i <- which.max( varPart$Batch )
+    Expression = geneExpr[i,]
+    GE <- data.frame( Expression ,
+                      Batch = info$Batch)
+    plotStratify( Expression ~ Batch, GE, main=rownames(geneExpr)[i])
+    
+![plot expression stratified by batch](2d.stratified_by_batch.png)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
     # Compute Canonical Correlation Analysis (CCA)
     # between all pairs of variables
     # returns absolute correlation value
