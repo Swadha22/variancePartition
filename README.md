@@ -78,11 +78,19 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
    
     #plot expression stratified by Individual
     plotStratify( Expression ~ Individual, GE, colorBy=NULL, text=label, main=main)
-    
-    
-![Fig-2b](2b.expression_stratified by_Tissue.png)
+   ![plot expression stratified by Individual](2b.expression_stratified by_Tissue.png)
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
   
+    #Assess correlation between all pairs of variables
+    form <- ~ Individual + cellType + Batch + Age 
+    # Compute Canonical Correlation Analysis (CCA)
+    # between all pairs of variables
+    # returns absolute correlation value
+    C = canCorPairs( form, info_)
+    # Plot correlation matrix
+    plotCorrMatrix( C )
+  ![correlation between all pairs of variables](3.correlation between all pairs of variables.png)
 
 
 
