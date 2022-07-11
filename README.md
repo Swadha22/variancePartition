@@ -78,7 +78,11 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
    
     #plot expression stratified by Individual
     plotStratify( Expression ~ Individual, GE, colorBy=NULL, text=label, main=main)
-   ![ plot expression stratified by Individual ](2b.expression_stratified by_Tissue.png)
+    
+    
+![Fig-2b](2b.expression_stratified by_Tissue.png)
+
+  
 
 
 
