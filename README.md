@@ -39,10 +39,48 @@ Using variancePartition on ImmVar dataset
     varPart <- fitExtractVarPartModel(geneExpr, form, info_)
     vp <- sortCols(varPart)
     plotPercentBars( vp[1:10,] )
-    ![Bar plot of variance fractions for the first 10 genes](1a.bar_plot_V2.png)
+    #Bar plot of variance fractions for the first 10 genes
+   ![ Bar plot of variance fractions for the first 10 genes ](1a.bar_plot_V2.png)
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+   
     
     plotVarPart( vp )
-    ![violin plot of contribution of each variable to total variance](1b.violen_Plot_V2.png)
+    #violin plot of contribution of each variable to total variance
+   ![ violin plot of contribution of each variable to total variance ](1b.violen_Plot_V2.png)
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    # get gene with the highest variation across Tissues
+    # create data.frame with expression of gene i and Tissue
+    # type for each sample
+    i <- which.max( varPart$cellType )
+    Expression = geneExpr[i,]
+    GE <- data.frame( Expression , Tissue = info_$cellType)
+
+    # plot expression stratified by Tissue
+    plotStratify( Expression ~ Tissue, GE, main=rownames(geneExpr)[i])
+   ![plot expression stratified by Tissue](2a.stratified_by_tissue.png)
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    # plot expression stratified by Individual
+    # get gene with the highest variation across Individuals and Tissue
+    # create data.frame with expression of gene i and Tissue
+    # type for each sample
+    i <- which.max( varPart$Individual )
+    Expression = geneExpr[i,]
+    GE <- data.frame( Expression ,
+                      Individual = info$Individual)
+    
+    label <- paste("Individual:", format(varPart$Individual[i]*100,
+                                         digits=3), "%")
+    main <- rownames(geneExpr)[i]
+
+   
+    #plot expression stratified by Individual
+    plotStratify( Expression ~ Individual, GE, colorBy=NULL, text=label, main=main)
+   ![ plot expression stratified by Individual ](2b.expression_stratified by_Tissue.png)
+
+
 
 
 
