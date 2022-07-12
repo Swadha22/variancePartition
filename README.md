@@ -120,6 +120,8 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 ![plot expression stratified by batch](2d.stratified_by_batch.png)
 ##### Figure 6: Based on the count matrix, this figure is telling differences in the gene expression among all the batches
 
+
+#### Assess correlation between all pairs of variables
     # Compute Canonical Correlation Analysis (CCA)
     # between all pairs of variables
     # returns absolute correlation value
