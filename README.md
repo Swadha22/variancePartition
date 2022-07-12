@@ -156,9 +156,10 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
 
 #### Variation within multiple subsets of the data.
-    # Analysis of the contribution of "individual" and "celtype" on variation in gene expression to examine the contribution of individual within each tissue.
-    # specify formula to model within/between individual variance separately for each celltype
-    # Note that including +0 ensures each tissue is modeled explicitly. Otherwise, the first tissue would be used as baseline
+
+    # In this analysis we are trying to see contribution of cell type (T cells and monocytes) variantion within each individual (948).
+    # specify formula to model within/between individual variance separately for each celltype.
+    # Note that including +0 ensures each tissue is modeled explicitly. Otherwise, the first tissue would be used as baseline.
 
    ##### Removing the individuals which do not have both the cell types in them
     #making a matrix of cellType and individual
@@ -182,15 +183,31 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
 
 
-#### Including interaction terms
+#### Removing the batch effect
 
-     form <- ~ (1|Individual) + Age + (1|cellType) + (1|Batch) + (1|Batch:cellType)
-     vpInteraction <- fitExtractVarPartModel( geneExpr, form, info_ )
-        
-     plotVarPart( sortCols( vpInteraction ) )
-        
-  ![5.Fit interaction term](5.Fit_interaction_term.png)
-  ##### Figure 9: Fit interaction term
+        library('limma')
+
+        fit <- lmFit( geneExpr, model.matrix(~ Batch, info_))
+        res <- residuals( fit, geneExpr)
+        # fit model on residuals
+        form <- ~ (1|cellType) + (1|Individual) + (1|Sex) + Age
+        varPartResid <- fitExtractVarPartModel( res, form, info_ )
+       
+        #Remove batch effect with linear mixed model
+       
+       # extract residuals directly without storing intermediate results
+        residList <- fitVarPartModel( geneExpr, ~ (1|Batch), info_, fxn=residuals )
+       
+       # convert list to matrix
+        residMatrix = do.call(rbind, residList)
+
+        form <- ~ Age + (1|Sex) +  (1|Individual) + (1|Batch) + (1|cellType)
+
+        varPart <- fitExtractVarPartModel(residMatrix, form, info_)
+        vp <- sortCols(varPart)
+        plotPercentBars( vp[1:10,])
+        plotVarPart( vp )   
+
 
 
  
