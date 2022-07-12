@@ -170,8 +170,10 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     varPart2 <- fitExtractVarPartModel( geneExpr_[,include], form, info_[include,] , showWarnings = FALSE )
     # violin plot
     plotVarPart( sortCols(varPart2), label.angle=60 )
-![4_Variation_within_multiple_subsetsofthedata.png](4_Variation_within_multiple_subsetsofthedata.pngg)
-##### Figure 7: Variation across individuals within each tissue
+    
+   ![Variation within multiple subsets of the data](4_Variation_within_multiple_subsetsofthedata.png)
+   
+  ##### Figure 8: Variation across individuals within each tissue
 
 
 
@@ -183,7 +185,7 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
      plotVarPart( sortCols( vpInteraction ) )
         
   ![5.Fit interaction term](5.Fit_interaction_term.png)
-##### Figure 8: Fit interaction term
+##### Figure 9: Fit interaction term
  
    
 ### Original data is described here
