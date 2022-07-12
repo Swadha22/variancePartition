@@ -1,16 +1,16 @@
-# variancePartition
-Using variancePartition on ImmVar dataset https://hoffmg01.u.hpc.mssm.edu/ImmVar/
+# This repository analyses Immune Variation Project dataset (ImmVar) using the R-biocondoctor package "variancePartition"
+The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
-## 1- Read variancePartition manuscript and install the software from the Bioconductor page
+### 1- Read variancePartition manuscript and install the software from the Bioconductor page
 
     if (!require("BiocManager", quietly = TRUE))
       install.packages("BiocManager")
 
     BiocManager::install("variancePartition")
 
-## 2- Apply it to ImmVar dataset and describe what you learned about biology of gene expression
+### 2- Apply it to ImmVar dataset and describe what you learned about biology of gene expression
 
-#### setting working dir
+#### Setting working dir
     rm(list=ls())
     setwd("/Users/swadh/Desktop/mt.sanai/")
     
@@ -43,6 +43,7 @@ Using variancePartition on ImmVar dataset https://hoffmg01.u.hpc.mssm.edu/ImmVar
     plotPercentBars( vp[1:10,] )
     
    ![ Bar plot of variance fractions for the first 10 genes ](1a.bar_plot_V2.png)
+   
   In the plot above we can see a lot of batch effect happening in each of the 10 genes. Such effects can lead to inaccurate conclusions when their causes are correlated with one or more outcomes of interest in an experiment. 
 
 
@@ -67,7 +68,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
    ![plot expression stratified by Tissue](2a.stratified_by_tissue.png)
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-####  plot expression stratified by Individual
+####  Plot expression stratified by Individual
 
     # get gene with the highest variation across Individuals and Tissue
     # create data.frame with expression of gene i and Tissue
@@ -87,7 +88,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
   
-####  plot expression stratified by Sex
+####  Plot expression stratified by Sex
     # get gene with the highest variation across Sex
     # create data.frame with expression of gene i and Tissue
     # type for each sample
@@ -99,7 +100,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ![plot expression stratified by Sex](2c.Sex_Stratification.png)
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   
-#### plot expression stratified by batch
+#### Plot expression stratified by batch
     # get gene with the highest variation across Sex
     # create data.frame with expression of gene i and Tissue
     # type for each sample
