@@ -1,5 +1,5 @@
 ### Analyses of Immune Variation Project's microarray dataset using "variancePartition"
-The Immune Variation (ImmVar) project assayed gene expression in CD14 +CD16 − monocytes and CD4 + T-cells on the Affymetrix Human Gene 1.0 ST Array platform in order to characterize the role of cell type in genetic regulation of gene expression. Analysis of 984 individuals with data from both cell types reveals that multiple variables can contribute to the expression variation in this dataset.
+The Immune Variation (ImmVar) project assayed gene expression in  monocytes and CD4 T-cells on the Affymetrix Human Gene 1.0 ST Array platform in order to characterize the role of cell type in genetic regulation of gene expression. In this analysis, we are fitting a linear model to see what biological fators or the phenotypic characters might be driving the variation in the data. This analysis can help us apply different stategies for the downstream differencial gene expression analysis or whatever the goal is.
     
 The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
@@ -46,7 +46,7 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     
    ![ Bar plot of variance fractions for the first 10 genes ](1a.bar_plot_V2.png)
    
-  In the plot above we can see a lot of batch effect happening in each of the 10 genes. Such effects can lead to inaccurate conclusions when their causes are correlated with one or more outcomes of interest in an experiment. 
+##### Figure 1: Bar plot of variance fractions for the first 10 genes. In this figure it is evident that, most of the genewide variance is from the "batch" which is ~30%. Cell type variation is the strongest "biological driver" of variation in every gene followed by variation across individuals. Also, there are some genes (for example, gene 7892506) where no variance is explained by age or sex 
 
 
    
@@ -54,10 +54,11 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     plotVarPart( vp )
     
    ![ violin plot of contribution of each variable to total variance ](1b.violen_Plot_V2.png)
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+##### Figure 2: Violin plot of contribution of each variable to total variance. Simialar to the Figure-1, most of the variance in this figure is explained by "batch" followed by the "cell type" and individuals. We need to regress out the batch effect if we have to do futher downstream differential gene analysis. Also, we can regress out "age" and "sex" from the analysis as they are not contributing a lot in the variance. "Residual" is anything that could not have been fit by the model. In the future we can also analyze "residuals" so see where these variations are coming from.
 
 
-#### Plot expression stratified by Tissue
+#### Plot expression stratified by Tissue.
+    Here, I am trying to plot functions to visualize the variation across a variable of interest, which is Tissue in this case.
     # get gene with the highest variation across Tissues
     # create data.frame with expression of gene i and Tissue
     # type for each sample
@@ -68,12 +69,13 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
     plotStratify( Expression ~ Tissue, GE, main=rownames(geneExpr)[i])
    ![plot expression stratified by Tissue](2a.stratified_by_tissue.png)
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+##### Figure 3: Based on the count matrix, this figure is telling that the gene 8155458 (which was showing hightest variantion) is more abundant in the monocyte.
 
-####  Plot expression stratified by Individual
 
-    # get gene with the highest variation across Individuals and Tissue
-    # create data.frame with expression of gene i and Tissue
+####  Plot expression stratified by Individuals
+    Here, I am trying to plot functions to visualize the variation across a variable of interest, which is Individuals in this case.
+    # get gene with the highest variation across Individuals
+    # create data.frame with expression of gene i and Individual
     # type for each sample
     i <- which.max( varPart$Individual )
     Expression = geneExpr[i,]
@@ -86,13 +88,15 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
    
     plotStratify( Expression ~ Individual, GE, colorBy=NULL, text=label, main=main)
-  ![plot expression stratified by Individual](2a.stratified_by_tissue.png)
- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  ![plot expression stratified by Individual](2b.stratified_by_Tissue.png)
+##### Figure 4: Based on the count matrix, this figure is telling that the gene 7903765 was showing hightest variantion across all the individuals).
+
 
   
 ####  Plot expression stratified by Sex
+    Here, I am trying to plot functions to visualize the variation across a variable of interest, which is Sex in this case.
     # get gene with the highest variation across Sex
-    # create data.frame with expression of gene i and Tissue
+    # create data.frame with expression of gene i and Sex
     # type for each sample
     i <- which.max( varPart$Sex )
     Expression = geneExpr[i,]
@@ -100,11 +104,12 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                       Sex = info$Sex)
     plotStratify( Expression ~ Sex, GE, main=rownames(geneExpr)[i])
 ![plot expression stratified by Sex](2c.Sex_Stratification.png)
- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+##### Figure 5: Based on the count matrix, this figure is telling that the gene 8176375 (which was showing hightest variantion across sex) is more abundantly expressed in males.
   
 #### Plot expression stratified by batch
-    # get gene with the highest variation across Sex
-    # create data.frame with expression of gene i and Tissue
+    Here, I am trying to plot functions to visualize the variation across a variable of interest, which is batch in this case.
+    # get gene with the highest variation across batch
+    # create data.frame with expression of gene i and Batch
     # type for each sample
     i <- which.max( varPart$Batch )
     Expression = geneExpr[i,]
@@ -113,8 +118,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     plotStratify( Expression ~ Batch, GE, main=rownames(geneExpr)[i])
     
 ![plot expression stratified by batch](2d.stratified_by_batch.png)
-
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+##### Figure 6: Based on the count matrix, this figure is telling differences in the gene expression among all the batches
 
     # Compute Canonical Correlation Analysis (CCA)
     # between all pairs of variables
@@ -123,8 +127,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     # Plot correlation matrix
     plotCorrMatrix( C )
   ![correlation between all pairs of variables](3.correlation_between_all_pairs_of_variables.png)
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
+##### Figure 7: Assess correlation between all pairs of variables. Age is not correlating with the cell type (which we had already seen in Figure 1 and 2) although it shows good correlation with the individual. 
 
 #### Detecting problems caused by collinearity of variables
         form <- ~ (1|Individual) + (1|cellType) + Age 
