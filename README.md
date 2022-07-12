@@ -158,10 +158,10 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
 #### Variation within multiple subsets of the data.
 
-  # In this analysis we are trying to see contribution of cell type (T cells and monocytes) variantion within each individual.
-  # specify formula to model within/between individual variance separately for each celltype.
-  # Note that including +0 ensures each tissue is modeled explicitly. 
-  # Otherwise, the first tissue would be used as baseline.
+      # In this analysis we are trying to see contribution of cell type (T cells and monocytes) variantion within each individual.
+      # specify formula to model within/between individual variance separately for each celltype.
+      # Note that including +0 ensures each tissue is modeled explicitly. 
+      # Otherwise, the first tissue would be used as baseline.
 
    ##### Removing the individuals which do not have both the cell types in them
     #making a matrix of cellType and individual
