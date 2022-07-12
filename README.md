@@ -179,7 +179,7 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     
    ![Variation within multiple subsets of the data](4_Variation_within_multiple_subsetsofthedata.png)
    
-  ##### Figure 8: Variation across individuals within each tissue
+  ##### Figure 8: Variation across individuals within each cell type. The variation across individuals within T-cells (median ~20%) and monocytes (median ~8%) is substantially larger than when the two cell types were combined .
 
 
 
