@@ -1,4 +1,4 @@
-### Analyses of Immune Variation Project's microarray dataset using "variancePartition"
+### Analysis of Immune Variation Project's microarray dataset using "variancePartition"
 The Immune Variation (ImmVar) project assayed gene expression in  monocytes and CD4 T-cells on the Affymetrix Human Gene 1.0 ST Array platform in order to characterize the role of cell type in genetic regulation of gene expression. In this analysis, we are fitting a linear model to see what biological fators or the phenotypic characters might be driving the variation in the data. This analysis can help us apply different stategies for the downstream differencial gene expression analysis or whatever the goal is.
     
 The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
@@ -150,6 +150,30 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
         
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+#### Variation within multiple subsets of the data.
+    # Analysis of the contribution of individual and celtype on variation in gene expression to examine the contribution of individual within each tissue.
+    # specify formula to model within/between individual variance separately for each celltype
+    # Note that including +0 ensures each tissue is modeled explicitly. Otherwise, the first tissue would be used as baseline
+
+   ##### Removing the individuals which do not have both the cell types in them
+    #making a matrix of cellType and individual
+    ct_Indi = xtabs(~cellType + Individual, info_) 
+    #select individuals which as both celltypes
+    Indi_both_cellType = which(apply(ct_Indi, 2, min) > 0)
+    #include the individuals which has both celltypes
+    include = info$Individual %in% names(Indi_both_cellType)
+
+    #formula
+    form <- ~ (cellType+0|Individual) + Age + (1|cellType) + (1|Batch)
+    vp = fitExtractVarPartModel(geneExpr_[,include], form, info_[include,] )
+
+    varPart2 <- fitExtractVarPartModel( geneExpr_[,include], form, info_[include,] , showWarnings = FALSE )
+    # violin plot
+    plotVarPart( sortCols(varPart2), label.angle=60 )
+![4_Variation_within_multiple_subsetsofthedata.png](4_Variation_within_multiple_subsetsofthedata.pngg)
+##### Figure 7: Variation across individuals within each tissue
+
+
 
 #### Including interaction terms
 
@@ -159,8 +183,8 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
      plotVarPart( sortCols( vpInteraction ) )
         
   ![5.Fit interaction term](5.Fit_interaction_term.png)
-    
- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+##### Figure 8: Fit interaction term
+ 
    
 ### Original data is described here
   
