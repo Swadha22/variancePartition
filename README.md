@@ -128,8 +128,9 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     C = canCorPairs( form, info_)
     # Plot correlation matrix
     plotCorrMatrix( C )
+    
   ![correlation between all pairs of variables](3.correlation_between_all_pairs_of_variables.png)
-##### Figure 7: Assess correlation between all pairs of variables. While Age shows a good correlation with Individual, it is not correlating with the cell type at all (which we had already seen in Figure 1 and 2). Similarly, Individual is showing fair correlation with cell type.
+##### Figure 7: Assess correlation between all pairs of variables.While Age shows a good correlation with Individual, it is not correlating with the cell type at all (which we had already seen in Figure 1 and 2). Similarly, Individual is showing fair correlation with cell type.
 
 #### Detecting problems caused by collinearity of variables
         #Including variables that are highly correlated can produce misleading results and overestimate the contribution of variables modeled as fixed effects (which is "Age" in our case).
@@ -157,9 +158,10 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
 #### Variation within multiple subsets of the data.
 
-    # In this analysis we are trying to see contribution of cell type (T cells and monocytes) variantion within each individual (948).
-    # specify formula to model within/between individual variance separately for each celltype.
-    # Note that including +0 ensures each tissue is modeled explicitly. Otherwise, the first tissue would be used as baseline.
+  # In this analysis we are trying to see contribution of cell type (T cells and monocytes) variantion within each individual.
+  # specify formula to model within/between individual variance separately for each celltype.
+  # Note that including +0 ensures each tissue is modeled explicitly. 
+  # Otherwise, the first tissue would be used as baseline.
 
    ##### Removing the individuals which do not have both the cell types in them
     #making a matrix of cellType and individual
@@ -203,10 +205,22 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
         form <- ~ Age + (1|Sex) +  (1|Individual) + (1|Batch) + (1|cellType)
 
-        varPart <- fitExtractVarPartModel(residMatrix, form, info_)
-        vp <- sortCols(varPart)
-        plotPercentBars( vp[1:10,])
-        plotVarPart( vp )   
+        varPart.BATCH.REMOVED <- fitExtractVarPartModel(residMatrix, form, info_)
+        vp.BATCH.REMOVED <- sortCols(varPart.BATCH.REMOVED)
+        
+        plotPercentBars( vp.BATCH.REMOVED[1:10,])
+        
+        
+        
+   ![Bar No batch](Bar_No_batch.png)
+   
+##### Figure 9: Bar plot of variance fractions for the first 10 genes after removing the batch.  Most of the variance in the data was driven by Cell type followed by the individuals
+        
+        plotVarPart( vp.BATCH.REMOVED )
+        
+   ![voilon plot batch removed](voilon_plot_batch_removed.png)
+##### Figure 10: Violin plot of contribution of each variable to total variance. After removing the batch we saw that most of the variance in the data was driven by Cell type followed by the individuals
+
 
 
 
