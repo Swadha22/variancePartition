@@ -1,5 +1,5 @@
 ### Analyses of Immune Variation Project's microarray dataset using "variancePartition"
-    The Immune Variation (ImmVar) project assayed gene expression in CD14 +CD16 − monocytes and CD4 + T-cells on the Affymetrix Human Gene 1.0 ST Array platform in order to characterize the role of cell type in genetic regulation of gene expression. Analysis of 984 individuals with data from both cell types reveals that multiple variables can contribute to the expression variation in this dataset.
+The Immune Variation (ImmVar) project assayed gene expression in CD14 +CD16 − monocytes and CD4 + T-cells on the Affymetrix Human Gene 1.0 ST Array platform in order to characterize the role of cell type in genetic regulation of gene expression. Analysis of 984 individuals with data from both cell types reveals that multiple variables can contribute to the expression variation in this dataset.
     
 The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
