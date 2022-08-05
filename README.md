@@ -64,6 +64,10 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
    ![ violin plot of contribution of each variable to total variance ](1b.violen_Plot_V2.png)
 ##### Figure 2: Violin plot of contribution of each variable to total variance. Simialar to the Figure-1, most of the variance in this figure is explained by "batch" followed by the "cell type" and individuals. We need to regress out the batch effect if we have to do futher downstream differential gene analysis. Also, we can regress out "age" and "sex" from the analysis as they are not contributing a lot in the variance. "Residual" is anything that could not have been fit by the model. In the future we can also analyze "residuals" so see where these variations are coming from.
 
+### Plot expression stratified by other variables
+     #variancePartition also includes plotting functions to visualize the variation across a variable of interest. plotStratify plots the expression
+      #of a gene stratified by the specified variable.
+
 
 #### Plot expression stratified by Tissue.
     Here, I am trying to plot functions to visualize the variation across Tissue.
