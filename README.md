@@ -36,6 +36,13 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     info_ <- info[,c("Age", "Sex", "Batch","Individual","cellType") ]
     
 #### Formula indicating the metedata variables and fitting the model
+    # Step 1: fit linear mixed model on gene expression
+    # If categorical variables are specified, a linear mixed model is used. If all variables are modeled as continuous, a linear model is used.
+    # Each entry in results is a regression model fit on a single gene
+    # Step 2: extract variance fractions from each model fit
+    # for each gene, returns fraction of variation attributable to each variable 
+    # Interpretation: the variance explained by each variable after correction for all other variables
+    
     form <- ~ Age + (1|Sex) +  (1|Individual) + (1|Batch) + (1|cellType)
     varPart <- fitExtractVarPartModel(geneExpr, form, info_)
     vp <- sortCols(varPart)
