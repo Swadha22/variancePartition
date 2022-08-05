@@ -46,6 +46,7 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
     form <- ~ Age + (1|Sex) +  (1|Individual) + (1|Batch) + (1|cellType)
     varPart <- fitExtractVarPartModel(geneExpr, form, info_)
     vp <- sortCols(varPart)
+    #fitExtractVarPartModel() returns an object that stores the variance fractions for each gene and each variable in the formula.
     
 #### Bar plot of variance fractions for the first 10 genes
 
