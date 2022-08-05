@@ -134,6 +134,16 @@ The daset used in this analysis is:  https://hoffmg01.u.hpc.mssm.edu/ImmVar/
 
 
 #### Assess correlation between all pairs of variables
+
+    #variancePartition fits a linear (mixed) model that jointly considers the contribution of all specified variables on the expression of each gene. It uses a           #multiple regression model so that the effect of each variable is assessed while jointly accounting for all others1. However, we note that like any multiple           #regression model, high correlation bewtween fixed or random effect variables can produce unstable estimates and it can be challanging to identify which variable 
+    #is responsible for the expression variation.
+    
+    
+    #For example, Age is nested within Individual since the multiple samples from each individual are taken at the same age. Thus the effect of Age removes some 
+    #variation from being explained by Individual. This often arises when considering variation across individuals and across sexes: any cross-sex variation is a    
+    #component of the cross-individual variation. So the total variation across individuals is the sum of the fraction of variance explained by Sex and Individual
+    
+    
     # Compute Canonical Correlation Analysis (CCA)
     # between all pairs of variables
     # returns absolute correlation value
